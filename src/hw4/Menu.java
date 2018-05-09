@@ -307,6 +307,8 @@ public class Menu
 						quitInput = sc.nextInt();
 					}catch(InputMismatchException e) {
 						System.out.println("INVALID INPUT\nPlease enter a valid response.\n");
+						sc.nextLine();
+						continue;
 					}
 					switch(quitInput) {
 					case 1: //quit
