@@ -89,7 +89,7 @@ public class Menu
 				try {
 					yearCheckingOut = Integer.parseInt(tokensCheckingOut[0]);
 					monthCheckingOut = Integer.parseInt(tokensCheckingOut[1]);
-					dayCheckingOut = Integer.parseInt(tokensCheckingOut[1]);
+					dayCheckingOut = Integer.parseInt(tokensCheckingOut[2]);
 				}catch(NumberFormatException e) {
 					System.out.println("ACTION FAILED. Bad date entry.\n");
 					break;
@@ -136,7 +136,7 @@ public class Menu
 				try {
 					yearReturning = Integer.parseInt(tokensReturning[0]);
 					monthReturning = Integer.parseInt(tokensReturning[1]);
-					dayReturning = Integer.parseInt(tokensReturning[1]);
+					dayReturning = Integer.parseInt(tokensReturning[2]);
 				}catch(NumberFormatException e) {
 					System.out.println("ACTION FAILED. Bad date entry.\n");
 					break;
@@ -173,6 +173,26 @@ public class Menu
 				break;
 			case 4: //pay fines
 				//TODO
+				System.out.println("Enter the name of the patron paying fines.");
+				sc.nextLine();
+				String patronPayingFinesName = sc.nextLine();
+				LibraryPatron patronPayingFines = myLibrary.findUser(patronPayingFinesName);
+				if(patronPayingFines == null) {
+					System.out.println("ACTION FAILED. The patron was not found.\n");
+					break;
+				}
+				System.out.println("Patron's current fines: " + patronPayingFines.getBalance());
+				System.out.println("Enter the amount to pay.");
+				int paymentAmount = 0;
+				try {
+					paymentAmount = sc.nextInt();
+				}catch(InputMismatchException e) {
+					System.out.println("ACTION FAILED. Number input expected.\n");
+					break;
+				}
+				patronPayingFines.payFines(paymentAmount);
+				System.out.println("Amount paid: " + paymentAmount);
+				System.out.println("Patron's current fines: " + patronPayingFines.getBalance());
 				break;
 			//Search options
 			case 5: //search by title keyword
