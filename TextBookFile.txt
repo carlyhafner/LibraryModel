@@ -1,0 +1,5 @@
+4001/How to Think Like a Computer Scientist: Learning with Python/Downey, Allen B.
+4002/Think Java: How to Think Like a Computer Scientist/Downey, Allen B.
+4003/Think Complexity Complexity Science and Computational Modeling/Downey, Allen B.
+4004/Computer Science: An Overview/Brookshear, Glenn
+4005/Computer Science: An Interdisciplinary Approach/Sedgewick, Robert

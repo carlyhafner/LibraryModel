@@ -1,0 +1,11 @@
+1001/The Shawshank Redemption/Darabont, Frank
+1002/The Godfather/Coppola, Francis Ford
+1003/The Godfather: Part II/Coppola, Francis Ford
+1004/The Dark Knight/Nolan, Christopher
+1006/The Lord of the Rings: The Fellowship of the Ring/Jackson, Peter
+1007/The Lord of the Rings: The Two Towers/Jackson, Peter
+1008/The Lord of the Rings: The Return of the King/Jackson, Peter
+1009/Star Wars: Episode IV - A New Hope/Lucas, George
+1010/Star Wars: Episode V - The Empire Strikes Back/Kershner, Irvin
+1011/Star Wars: Episode VI - Return of the Jedi/Marquand, Richard
+1012/Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb/Kubrick, Stanley

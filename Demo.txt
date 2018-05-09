@@ -1,0 +1,250 @@
+package hw4;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Scanner;
+
+public class Demo
+{
+
+	public static void main(String[] args)
+	{
+		System.out.println("");
+		
+		//construct the library
+		Library demoLibrary = new Library();
+		System.out.println("A new library has been created.");
+		System.out.println();
+		
+		//Add a patron to the library
+		System.out.println("Now that we have our library, we will add a patron...");
+		String demoPatronName1 = "Adam Washington";
+		LibraryPatron demoPatron1 = new LibraryPatron(demoPatronName1);
+		System.out.println("A patron has been created.");
+		System.out.println("Name: " + demoPatron1.getName());
+		System.out.println("Balance: " + demoPatron1.getBalance());
+		demoLibrary.addPatron(demoPatron1);
+		System.out.println("The patron has been added to the library.");
+		System.out.println();
+		
+		//Add a patron with a name from stdin
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Please enter the name of another patron.");
+		String demoPatronName2 = sc.nextLine();
+		LibraryPatron demoPatron2 = new LibraryPatron(demoPatronName2);
+		System.out.println("A patron has been added.");
+		System.out.println("Name: " + demoPatron2.getName());
+		System.out.println("Balance: " + demoPatron2.getBalance());
+		demoLibrary.addPatron(demoPatron2);
+		System.out.println("The patron has been added to the library.");
+		System.out.println();
+		
+		//add a bunch of patrons
+		System.out.println("We will now add patrons to the library from a file...");
+		Demo.addLibraryPatronFromFile(demoLibrary, "LibraryPatronFile.txt");
+		Demo.addChildPatronFromFile(demoLibrary, "ChildPatronFile.txt");
+		System.out.println("The library now contains the following patrons:");
+		System.out.println(demoLibrary.listLibraryPatrons());
+		System.out.println();
+		System.out.println();
+		
+		
+		//
+		System.out.println("This library has several types of library item.");
+		System.out.println("First, let's look at general books.");
+		System.out.println();
+		
+		System.out.println("About GENERAL books:");
+		System.out.println("Fine per day (in cents): " + GeneralBook.FINE_PER_DAY);
+		System.out.println("Lending Period (in days): " + GeneralBook.LENDING_PERIOD);
+		System.out.println("Number of times this type of item can be renewed: " + GeneralBook.NUMBER_OF_TIMES_MAY_BE_RENEWED);
+		System.out.println();
+		
+		System.out.println("Now, we will create a general book and add it to the library.");
+		System.out.println();
+		
+		GeneralBook theStand = new GeneralBook("The Stand", "Stephen King");
+		System.out.println("A book has been created:");
+		System.out.println(theStand.toString());
+		demoLibrary.addItem(theStand);
+		System.out.println("The book has been added to the library.");
+		System.out.println();
+				
+		//add general book from stdin
+		System.out.println("Now, we will create a book with custom input and add it to the library.");
+		System.out.println("Please enter the title of a book.");
+		String generalBookTitle = sc.nextLine();
+		System.out.println("Please enter the author of the book");
+		String generalBookAuthor = sc.nextLine();
+		System.out.println("A book has been created:");
+		GeneralBook generalBook = new GeneralBook(generalBookTitle, generalBookAuthor);
+		System.out.println(generalBook.toString());
+		demoLibrary.addItem(generalBook);
+		System.out.println("The book has been added to the library.");
+		System.out.println();
+		
+		//introduce textbooks
+		System.out.println("About TEXTBOOKS:");
+		System.out.println("Initial fine per day (in cents): " + TextBook.FINE_PER_DAY_BEFORE_FINE_INCREASES);
+		System.out.println("Number of days before fine increases: " + TextBook.NUMBER_OF_DAYS_BEFORE_FINE_INCREASES);
+		System.out.println("Fine per day after fine increases: " + TextBook.FINE_PER_DAY_AFTER_FINE_INCREASES);
+		System.out.println("Lending Period (in days): " + TextBook.LENDING_PERIOD);
+		System.out.println("Textbooks may not be renewed.");
+		System.out.println();
+		
+		//introduce reference books
+		System.out.println("About REFERENCE books:");
+		System.out.println("Reference books may not be checked out.");
+		System.out.println("Attempting to check out or return a reference book throws a Library Exception.");
+		System.out.println();
+		
+		//introduce DVDs
+		System.out.println("About DVDs");
+		System.out.println("Fine per day (in cents): " + DVD.FINE_PER_DAY);
+		System.out.println("Lending Period (in days): " + DVD.LENDING_PERIOD);
+		System.out.println("DVDs may not be renewed.");
+		System.out.println();
+		
+		//add a bunch of library materials
+		System.out.println("We will now add books to the library from files...");
+		Demo.addGeneralBookFromFile(demoLibrary, "GeneralBookFile.txt");
+		Demo.addTextBookFromFile(demoLibrary, "TextBookFile.txt");
+		Demo.addReferenceBookFromFile(demoLibrary, "ReferenceBookFile.txt");
+		Demo.addDVDFromFile(demoLibrary, "DVDFile.txt");
+		System.out.println("The library now contains the following library materials:");
+		System.out.println(demoLibrary.listLibraryItems());
+		System.out.println();
+		
+		//do searches
+		//check things out
+		//pass time
+		//return things
+		//show fines
+		//pay fines
+		
+		sc.close();
+
+	}
+
+	private static void addChildPatronFromFile(Library library, String fileName)
+	{
+		String line = null;
+		try {
+			FileReader fr = new FileReader(fileName);
+			BufferedReader br = new BufferedReader(fr);
+			while((line = br.readLine()) != null) {
+				library.addPatron(new ChildPatron(line));
+			}
+			br.close();
+		}
+		catch(FileNotFoundException ex) {
+			System.out.println("Unable to open file: " + fileName);
+		}
+		catch(IOException ex) {
+			System.out.println("Error reading file: " + fileName);
+		}
+	}
+
+	private static void addLibraryPatronFromFile(Library library, String fileName)
+	{
+		String line = null;
+		try {
+			FileReader fr = new FileReader(fileName);
+			BufferedReader br = new BufferedReader(fr);
+			while((line = br.readLine()) != null) {
+				library.addPatron(new LibraryPatron(line));
+			}
+			br.close();
+		}
+		catch(FileNotFoundException ex) {
+			System.out.println("Unable to open file: " + fileName);
+		}
+		catch(IOException ex) {
+			System.out.println("Error reading file: " + fileName);
+		}
+	}
+
+	private static void addDVDFromFile(Library library, String fileName)
+	{
+		String str = null;
+		try {
+			FileReader fr = new FileReader(fileName);
+			BufferedReader br = new BufferedReader(fr);
+			while((str = br.readLine()) != null) {
+				String[] tokens = str.split("/");
+				library.addItem(new DVD(tokens[0], tokens[1]));				
+			}
+			br.close();
+		}
+		catch(FileNotFoundException ex) {
+			System.out.println("Unable to open file: " + fileName);
+		}
+		catch(IOException ex) {
+			System.out.println("Error reading file: " + fileName);
+		}
+	}
+
+	private static void addReferenceBookFromFile(Library library, String fileName)
+	{
+		String str = null;
+		try {
+			FileReader fr = new FileReader(fileName);
+			BufferedReader br = new BufferedReader(fr);
+			while((str = br.readLine()) != null) {
+				String[] tokens = str.split("/");
+				library.addItem(new ReferenceBook(tokens[0], tokens[1]));				
+			}
+			br.close();
+		}
+		catch(FileNotFoundException ex) {
+			System.out.println("Unable to open file: " + fileName);
+		}
+		catch(IOException ex) {
+			System.out.println("Error reading file: " + fileName);
+		}
+		
+	}
+
+	private static void addTextBookFromFile(Library library, String fileName)
+	{
+		String str = null;
+		try {
+			FileReader fr = new FileReader(fileName);
+			BufferedReader br = new BufferedReader(fr);
+			while((str = br.readLine()) != null) {
+				String[] tokens = str.split("/");
+				library.addItem(new TextBook(tokens[0], tokens[1]));				
+			}
+			br.close();
+		}
+		catch(FileNotFoundException ex) {
+			System.out.println("Unable to open file: " + fileName);
+		}
+		catch(IOException ex) {
+			System.out.println("Error reading file: " + fileName);
+		}
+	}
+
+	private static void addGeneralBookFromFile(Library library, String fileName)
+	{
+		String str = null;
+		try {
+			FileReader fr = new FileReader(fileName);
+			BufferedReader br = new BufferedReader(fr);
+			while((str = br.readLine()) != null) {
+				String[] tokens = str.split("/");
+				library.addItem(new GeneralBook(tokens[0], tokens[1]));				
+			}
+			br.close();
+		}
+		catch(FileNotFoundException ex) {
+			System.out.println("Unable to open file: " + fileName);
+		}
+		catch(IOException ex) {
+			System.out.println("Error reading file: " + fileName);
+		}		
+	}
+
+}
