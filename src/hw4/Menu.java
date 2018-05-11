@@ -19,6 +19,7 @@ public class Menu
 		Library myLibrary = new Library();
 		Scanner sc = new Scanner(System.in);
 		while(continueMenu) {
+			
 			//print the menu
 			System.out.println(
 				"Welcome to Carly's Library\n"
