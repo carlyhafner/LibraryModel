@@ -2,16 +2,13 @@ package library;
 
 /**
  * The TextBook class represents library items that can be checked out under the
- * following policy:
- * the lending period is 2 days,
- * the item cannot be renewed, and
- * the fine is 50 cents per day for the first seven days that the item is late,
- * and is one dollar per day thereafter.
+ * following policy: the lending period is 2 days, the item cannot be renewed,
+ * and the fine is 50 cents per day for the first seven days that the item is
+ * late, and is one dollar per day thereafter.
  * 
  * @author Carly Hafner
  */
-public class TextBook extends LibraryItem
-{
+public class TextBook extends LibraryItem {
 	/**
 	 * The amount of time a book may be checked out
 	 */
@@ -41,41 +38,39 @@ public class TextBook extends LibraryItem
 	 * @param author
 	 *            the author for this book
 	 */
-	public TextBook(int itemID, String title, String author)
-	{
+	public TextBook(int itemID, String title, String author) {
 		super(itemID, title, author);
 		type = "TEXTBOOK";
 	}
 
-	@Override public void checkOutItem(SimpleDate today) throws LibraryException
-	{
-		if (status == true)
-		{
+	/**
+	 * Constructs a textbook. The item number is 0. The title and author are null.
+	 */
+	public TextBook() {
+		super();
+		type = "TEXTBOOK";
+	}
+
+	@Override
+	public void checkOutItem(SimpleDate today) throws LibraryException {
+		if (status == true) {
 			throw new LibraryException();
-		}
-		else
-		{
+		} else {
 			status = true;
 			dueDate = new SimpleDate(today, LENDING_PERIOD);
 		}
 	}
 
-	@Override public int returnItem(SimpleDate today) throws LibraryException
-	{
+	@Override
+	public int returnItem(SimpleDate today) throws LibraryException {
 		int fine = 0;
-		if (status == false)
-		{
+		if (status == false) {
 			throw new LibraryException();
-		}
-		else if (dueDate.isBefore(today))
-		{
+		} else if (dueDate.isBefore(today)) {
 			int daysOverdue = dueDate.daysUntil(today);
-			if (daysOverdue <= NUMBER_OF_DAYS_BEFORE_FINE_INCREASES)
-			{
+			if (daysOverdue <= NUMBER_OF_DAYS_BEFORE_FINE_INCREASES) {
 				fine = FINE_PER_DAY_BEFORE_FINE_INCREASES * daysOverdue;
-			}
-			else
-			{
+			} else {
 				fine = FINE_PER_DAY_BEFORE_FINE_INCREASES * NUMBER_OF_DAYS_BEFORE_FINE_INCREASES;
 				fine += FINE_PER_DAY_AFTER_FINE_INCREASES * (daysOverdue - NUMBER_OF_DAYS_BEFORE_FINE_INCREASES);
 			}
@@ -86,13 +81,13 @@ public class TextBook extends LibraryItem
 		return fine;
 	}
 
-	@Override public String getType()
-	{
+	@Override
+	public String getType() {
 		return type;
 	}
 
-	@Override public boolean renew()
-	{
+	@Override
+	public boolean renew() {
 		// Text books may not be renewed.
 		return false;
 	}

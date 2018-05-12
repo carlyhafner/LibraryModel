@@ -2,15 +2,12 @@ package library;
 
 /**
  * The DVD class represents library items that can be checked out under the
- * following policy:
- * the lending period is 7 days,
- * the item cannot be renewed, and
- * the fine is 75 cents per day.
+ * following policy: the lending period is 7 days, the item cannot be renewed,
+ * and the fine is 75 cents per day.
  * 
  * @author Carly Hafner
  */
-public class DVD extends LibraryItem
-{
+public class DVD extends LibraryItem {
 	/**
 	 * The amount of time a book may be checked out
 	 */
@@ -33,35 +30,36 @@ public class DVD extends LibraryItem
 	 * @param author
 	 *            the studio or director of the DVD
 	 */
-	public DVD(int itemID, String title, String author)
-	{
+	public DVD(int itemID, String title, String author) {
 		super(itemID, title, author);
 		type = "DVD";
 	}
 
-	@Override public void checkOutItem(SimpleDate today) throws LibraryException
-	{
-		if (status == true)
-		{
+	/**
+	 * Constructs a DVD. The item number is 0. The title and author are null.
+	 */
+	public DVD() {
+		super();
+		type = "DVD";
+	}
+
+	@Override
+	public void checkOutItem(SimpleDate today) throws LibraryException {
+		if (status == true) {
 			throw new LibraryException();
-		}
-		else
-		{
+		} else {
 			status = true;
 			dueDate = new SimpleDate(today, LENDING_PERIOD);
 		}
 
 	}
 
-	@Override public int returnItem(SimpleDate today) throws LibraryException
-	{
+	@Override
+	public int returnItem(SimpleDate today) throws LibraryException {
 		int fine = 0;
-		if (status == false)
-		{
+		if (status == false) {
 			throw new LibraryException();
-		}
-		else if (dueDate.isBefore(today))
-		{
+		} else if (dueDate.isBefore(today)) {
 			int daysOverdue = dueDate.daysUntil(today);
 			fine = FINE_PER_DAY * daysOverdue;
 		}
@@ -70,13 +68,13 @@ public class DVD extends LibraryItem
 		return fine;
 	}
 
-	@Override public String getType()
-	{
+	@Override
+	public String getType() {
 		return type;
 	}
 
-	@Override public boolean renew()
-	{
+	@Override
+	public boolean renew() {
 		// DVDs may not be renewed.
 		return false;
 	}

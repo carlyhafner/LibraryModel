@@ -1,17 +1,15 @@
 package library;
 
 /**
- * A LibraryItem represents a resource in a library. It is
- * uniquely identified by an author and title (that is, there
- * are no items with multiple copies). The "author" may be
- * a person or an entity (such as a movie studio). If the
- * author is a person, the author's name must begin with the
- * last name followed by a comma.
+ * A LibraryItem represents a resource in a library. It is uniquely identified
+ * by an author and title (that is, there are no items with multiple copies).
+ * The "author" may be a person or an entity (such as a movie studio). If the
+ * author is a person, the author's name must begin with the last name followed
+ * by a comma.
  * 
  * @author Carly Hafner
  */
-public abstract class LibraryItem
-{
+public abstract class LibraryItem {
 
 	/**
 	 * The date the item is due
@@ -33,11 +31,11 @@ public abstract class LibraryItem
 	 * The date the item is due
 	 */
 	protected SimpleDate dueDate;
-	
+
 	/**
-	 * Checks out this item if possible. Some items do not circulate and
-	 * cannot be checked out. In addition, the item cannot be checked out
-	 * if it is already checked out.
+	 * Checks out this item if possible. Some items do not circulate and cannot be
+	 * checked out. In addition, the item cannot be checked out if it is already
+	 * checked out.
 	 * 
 	 * @param today
 	 *            the date on which this item is being checked out
@@ -58,35 +56,46 @@ public abstract class LibraryItem
 	public abstract int returnItem(SimpleDate today) throws LibraryException;
 
 	/**
-	 * Returns a String representation of the type of this item,
-	 * such as "GENERAL", "TEXTBOOK", "REFERENCE", or "DVD".
+	 * Returns a String representation of the type of this item, such as "GENERAL",
+	 * "TEXTBOOK", "REFERENCE", or "DVD".
 	 * 
 	 * @return type of this item
 	 */
 	public abstract String getType();
 
 	/**
-	 * Renews this item if possible. Returns false if the item
-	 * is not checked out or cannot be renewed.
+	 * Renews this item if possible. Returns false if the item is not checked out or
+	 * cannot be renewed.
 	 * 
 	 * @return true if the item was renewed, false otherwise
 	 */
 	public abstract boolean renew();
 
 	/**
-	 * Constructs a new LibraryItem with the given title and author.
-	 * This constructor may only be invoked by subclasses.
+	 * Constructs a new LibraryItem with the given id, title, and author. This
+	 * constructor may only be invoked by subclasses.
 	 * 
 	 * @param title
 	 *            the title of the item
 	 * @param author
 	 *            the author of the item
 	 */
-	protected LibraryItem(int itemID, String title, String author)
-	{
+	protected LibraryItem(int itemID, String title, String author) {
 		this.itemID = itemID;
 		this.title = title;
 		this.author = author;
+		status = false;
+		dueDate = null;
+	}
+
+	/**
+	 * Constructs a new LibraryItem. The item number is 0. The title and author are
+	 * null. This constructor may only be invoked by subclasses.
+	 */
+	protected LibraryItem() {
+		itemID = 0;
+		title = null;
+		author = null;
 		status = false;
 		dueDate = null;
 	}
@@ -96,20 +105,39 @@ public abstract class LibraryItem
 	 * 
 	 * @return true if this item is checked out, false otherwise
 	 */
-	public boolean isCheckedOut()
-	{
+	public boolean isCheckedOut() {
 		return status;
 	}
 
 	/**
-	 * Returns the due date for this item if it is currently checked out.
-	 * Returns null if the item is not checked out.
+	 * Sets whether this item is currently checked out.
+	 * 
+	 * @param isCheckedOut
+	 *            true if this item is checked out, false otherwise
+	 * 
+	 */
+	public void setStatus(boolean isCheckedOut) {
+		status = isCheckedOut;
+	}
+
+	/**
+	 * Returns the due date for this item if it is currently checked out. Returns
+	 * null if the item is not checked out.
 	 * 
 	 * @return due date for this item
 	 */
-	public SimpleDate getDueDate()
-	{
+	public SimpleDate getDueDate() {
 		return dueDate;
+	}
+
+	/**
+	 * Sets the due date for this item.
+	 * 
+	 * @param newDueDate
+	 *            the new due date for this item. null if not checked out.
+	 */
+	public void setDueDate(SimpleDate newDueDate) {
+		dueDate = newDueDate;
 	}
 
 	/**
@@ -117,9 +145,18 @@ public abstract class LibraryItem
 	 * 
 	 * @return tile of this item
 	 */
-	public String getTitle()
-	{
+	public String getTitle() {
 		return title;
+	}
+
+	/**
+	 * Sets the title of this item.
+	 * 
+	 * @param newTitle
+	 *            the new title for this item
+	 */
+	public void setTitle(String newTitle) {
+		title = newTitle;
 	}
 
 	/**
@@ -127,24 +164,42 @@ public abstract class LibraryItem
 	 * 
 	 * @return author of this item
 	 */
-	public String getAuthor()
-	{
+	public String getAuthor() {
 		return author;
 	}
-	
+
+	/**
+	 * Sets the author of this item.
+	 * 
+	 * @param newAuthor
+	 *            the new author for this item
+	 */
+	public void setAuthor(String newAuthor) {
+		author = newAuthor;
+	}
+
 	/**
 	 * Returns the itemID of this item.
 	 * 
-	 * @return author of this item
+	 * @return ID number of this item
 	 */
-	public int getItemID()
-	{
+	public int getItemID() {
 		return itemID;
 	}
 
 	/**
-	 * Returns a representation of the state of this object as a
-	 * multiline string. The format is:
+	 * Sets the itemID of this item.
+	 * 
+	 * @param newID
+	 *            the new ID number for this item
+	 */
+	public void setItemID(int newID) {
+		itemID = newID;
+	}
+
+	/**
+	 * Returns a representation of the state of this object as a multiline string.
+	 * The format is:
 	 * 
 	 * <pre>
 	 *   itemID
@@ -154,8 +209,8 @@ public abstract class LibraryItem
 	 *   	status
 	 * </pre>
 	 * 
-	 * the <tt>type</tt> is normally one of the strings "GENERAL",
-	 * "TEXTBOOK", "REFERENCE", or "DVD". The status is either
+	 * the <tt>type</tt> is normally one of the strings "GENERAL", "TEXTBOOK",
+	 * "REFERENCE", or "DVD". The status is either
 	 * 
 	 * <pre>
 	 *   Checked Out: yyyy-mm-dd
@@ -171,17 +226,11 @@ public abstract class LibraryItem
 	 * 
 	 * @return a string representation of this object
 	 */
-	public String toString()
-	{
-		String s = itemID + "\n"
-			+ "\t" + getType() + "\n"
-			+ "\t" + title + "\n"
-			+ "\t" + author + "\n";
-		if (isCheckedOut())
-		{
+	public String toString() {
+		String s = itemID + "\n" + "\t" + getType() + "\n" + "\t" + title + "\n" + "\t" + author + "\n";
+		if (isCheckedOut()) {
 			s = s + "\t" + "Checked Out: " + getDueDate().toString();
-		}
-		else
+		} else
 			s = s + "\t" + "Checked In";
 		return s;
 	}
