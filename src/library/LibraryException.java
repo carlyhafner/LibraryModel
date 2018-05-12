@@ -1,4 +1,4 @@
-package hw4;
+package library;
 
 /**
  * Exception type thrown for invalid operations such
